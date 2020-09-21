@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Brewery List</h1>
+
+{% for brewery in breweries %}
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ brewery.name }}</span>
+            <p>Established: {{brewery.established}}</p>
+            <img src="{{ brewery.images.medium }}" alt="">
+        </div>
+    </div>
+{% endfor %}
+
+
+
+{% endblock %}
