@@ -11,15 +11,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Brewery, Comment
 from .forms import CommentForm
+import openbrewerydb
 
 # API Stuff
-my_key = os.environ['BREWERY_API_KEY']
-b = requests.get(
-    f'https://sandbox-api.brewerydb.com/v2/breweries/?key={my_key}')
-l = requests.get(
-    f'https://sandbox-api.brewerydb.com/v2/locations/?key={my_key}')
-breweries = b.json()["data"]
-locations = l.json()["data"]
+b = requests.get('https://api.openbrewerydb.org/breweries')
+
+breweries = b.json()
+
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
 BUCKET = 'catcollector-sei-9-cw'
@@ -35,11 +33,15 @@ def about(request):
 
 def breweries_index(request):
     # breweries = Brewery.objects.filter(user=request.user)
-    state_filter = []
-    for location in locations:
-        if 'region' in location and location["region"] == 'Colorado':
-            state_filter.append(location)
-    return render(request, 'breweries/index.html', {'breweries': breweries, 'state_filter': state_filter})
+    # state_filter = []
+    # for brewery in breweries:
+    #     if brewery["state"] == 'Arizona':
+    #         state_filter.append(brewery)
+    s = requests.get(f'https://api.openbrewerydb.org/breweries?by_state={}&per_page=50')
+    by_state = s.json()
+
+    
+    return render(request, 'breweries/index.html', {'breweries': breweries, 'by_state': by_state })
 
 
 def breweries_detail(request, brewery_id):

@@ -3,14 +3,13 @@
 
 <h1>Brewery List</h1>
 
-{% for brewery in state_filter %}
+{% for brewery in by_state %}
     <div class="card">
         <div class="card-content">
-            <span class="card-title">{{ brewery.brewery.name }}</span>
-            <p>Established: {{brewery.brewery.established}}</p>
-            <p>Address: {{brewery.streetAddress}}</p>
+            <span class="card-title">{{ brewery.name }}</span>
+            <p>City: {{brewery.city}}</p>
+            <p>Address: {{brewery.street}}</p>
             <p>id: {{ brewery.id }}</p>
-            <img src="{{ brewery.images.medium }}" alt="">
             <a href="{% url 'detail' brewery.id %}">Details</a>
         </div>
     </div>
