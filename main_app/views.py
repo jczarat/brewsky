@@ -13,13 +13,10 @@ from .models import Brewery, Comment
 from .forms import CommentForm
 
 # API Stuff
-my_key = os.environ['BREWERY_API_KEY']
-b = requests.get(
-    f'https://sandbox-api.brewerydb.com/v2/breweries/?key={my_key}')
-l = requests.get(
-    f'https://sandbox-api.brewerydb.com/v2/locations/?key={my_key}')
-breweries = b.json()["data"]
-locations = l.json()["data"]
+b = requests.get('https://api.openbrewerydb.org/breweries')
+
+breweries = b.json()
+
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
 BUCKET = 'catcollector-sei-9-cw'
@@ -35,19 +32,27 @@ def about(request):
 
 def breweries_index(request):
     # breweries = Brewery.objects.filter(user=request.user)
-    state_filter = []
-    for location in locations:
-        if 'region' in location and location["region"] == 'Colorado':
-            state_filter.append(location)
-    return render(request, 'breweries/index.html', {'breweries': breweries, 'state_filter': state_filter})
+    by_state = None
+    by_city = None
+    by_postal = None
+    if 'state' in request.GET:
+        state = request.GET['state']
+        s = requests.get(f'https://api.openbrewerydb.org/breweries?by_state={state}&per_page=50')
+        by_state = s.json()
+    if 'city' in request.GET:
+        city = request.GET['city']
+        c = requests.get(f'https://api.openbrewerydb.org/breweries?by_city={city}&per_page=50')
+        by_city = c.json()
+    if 'postal' in request.GET:
+        postal = request.GET['postal']
+        p = requests.get(f'https://api.openbrewerydb.org/breweries?by_postal={postal}&per_page=50')
+        by_postal = p.json()
+    return render(request, 'breweries/index.html', {'breweries': breweries, 'by_state': by_state, 'by_city': by_city , 'by_postal': by_postal})
 
 
 def breweries_detail(request, brewery_id):
-    # brewery = Brewery.objects.get(id=brewery_id)
-    for brewery in breweries:
-        if brewery['id'] == brewery_id:
-            print(brewery)
-    print(brewery_id)
+    d = requests.get(f'https://api.openbrewerydb.org/breweries/{brewery_id}')
+    brewery = d.json()
     return render(request, 'breweries/detail.html', {'brewery': brewery})
 
 def add_comment(request, brewery_id):
