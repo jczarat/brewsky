@@ -2,5 +2,9 @@
 {% block content %}
 
 <h1>Brewery Details</h1>
+<img src="{{brewery.images.large}}" alt="">
+<h3>{{brewery.name}}</h3>
+<p>{{brewery.description}}</p>
+<a href="{{brewery.website}}">{{brewery.website}}</a>
 
 {% endblock %}
