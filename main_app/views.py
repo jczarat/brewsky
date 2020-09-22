@@ -9,7 +9,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Brewery
+from .models import Brewery, Comment
+from .forms import CommentForm
 
 # API Stuff
 my_key = os.environ['BREWERY_API_KEY']
@@ -48,6 +49,15 @@ def breweries_detail(request, brewery_id):
             print(brewery)
     print(brewery_id)
     return render(request, 'breweries/detail.html', {'brewery': brewery})
+
+def add_comment(request, brewery_id):
+    form = CommentForm(request.POST)
+    if (form.is_valid):
+        new_comment = form.save(commit=False)
+        new_comment.brewery_id = brewery_id
+        # new_comment.save()
+        print(new_comment)
+    return redirect('detail', brewery_id=brewery_id)
 
 
 # @login_required
