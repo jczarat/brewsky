@@ -7,39 +7,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Brewsky</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 </head>
 
 <body>
-    <h1>Welcome to Brewsky!</h1>
-    <hr />
-    <header class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper">
-                <ul>
-                    <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Brewsky</a></li>
-                </ul>
-                <ul class="right">
-                    <li><a href="{% url 'home' %}">Find a Brewery</a></li>
+
+    <header class="">
+        <nav id="mynav" class="navbar is-spaced" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <p class="image is-64x64">
+                    <img src="https://i.imgur.com/VthtYEq.png" class="is-rounded">
+                </p>
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                    <a href="{% url 'home' %}" class="navbar-item is-size-4 has-text-weight-semibold">
+                        Home
+                    </a>
+                    <a href="{% url 'index' %}" class="navbar-item is-size-4 has-text-weight-semibold">
+                        My Breweries
+                    </a>
+                    
+                    
+                </div>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'index' %}">My Breweries</a></li>
-                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    <a href="{% url 'logout' %}" class="navbar-item is-size-4 has-text-weight-semibold">
+                        Log Out
+                    </a>
                     {% else %}
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                    <li><a href="{% url 'login' %}">Log In</a></li>
+                    <a href="{% url 'signup' %}" class="navbar-item is-size-4 has-text-weight-semibold">
+                        Sign Up
+                    </a><a href="{% url 'login' %}" class="navbar-item is-size-4 has-text-weight-semibold">
+                        Log In
+                    </a>
                     {% endif %}
-                </ul>
+
+                </div>
             </div>
         </nav>
+        
     </header>
-    <main class="container">
+    <main class="">
         {% block content %}
         {% endblock %}
     </main>
-    <footer class="page-footer">
-        <div class="right">All Rights Reserved, &copy; 2020 Brewsky &nbsp;</div>
+    <footer class="">
+        <div class="">All Rights Reserved, &copy; 2020 Brewsky &nbsp;</div>
     </footer>
 </body>
 </html>

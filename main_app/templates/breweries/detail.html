@@ -10,7 +10,7 @@
 <form action="{% url 'add_comment' brewery_result.id %}" method="post">
     {% csrf_token %}
     {{ comment_form.as_p }}
-    <input type="submit" class="btn" value="Add Comment">
+    <input type="submit" class="" value="Add Comment">
 </form>
 
 {% endblock %}
