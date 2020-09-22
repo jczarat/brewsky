@@ -6,8 +6,9 @@ from django.contrib.auth.models import User
 
 
 class Brewery(models.Model):
-    api_id = models.IntegerField(max_length=10)
+    api_id = models.IntegerField()
     name = models.CharField(max_length=100)
+    brewery_type = models.CharField(max_length=100)
     street = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)

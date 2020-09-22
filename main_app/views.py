@@ -53,7 +53,24 @@ def breweries_index(request):
 def breweries_detail(request, brewery_id):
     d = requests.get(f'https://api.openbrewerydb.org/breweries/{brewery_id}')
     brewery = d.json()
-    return render(request, 'breweries/detail.html', {'brewery': brewery})
+    if Brewery.objects.filter(api_id=brewery['id']).exists() == False:
+        new_brewery = Brewery.objects.create(
+            api_id = brewery['id'],
+            name = brewery['name'],
+            brewery_type = brewery['brewery_type'],
+            street = brewery['street'],
+            city = brewery['city'],
+            state = brewery['state'],
+            postal_code = brewery['postal_code'],
+            country = brewery['country'],
+            longitude = brewery['longitude'],
+            latitude = brewery['latitude'],
+            phone = brewery['phone'],
+            website_url = brewery['website_url']
+        )
+    brewery_result = Brewery.objects.get(api_id=brewery_id)
+    print(brewery_result)    
+    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result})
 
 def add_comment(request, brewery_id):
     form = CommentForm(request.POST)

@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Name: {{brewery.name}}</h3>
-<h3>City: {{brewery.city}}</h3>
-<h3>Address: {{brewery.street}}</h3>
+<h3>Name: {{brewery_result.name}}</h3>
+<h3>City: {{brewery_result.city}}</h3>
+<h3>Address: {{brewery_result.street}}</h3>
 
-<a href="{{brewery.website_url}}">{{brewery.website_url}}</a>
+<a href="{{brewery_result.website_url}}">{{brewery_result.website_url}}</a>
 
-<form action="{% url 'add_comment' brewery.id %}" method="post">
+<form action="{% url 'add_comment' brewery_result.id %}" method="post">
     {% csrf_token %}
     {{ comment_form.as_p }}
     <input type="submit" class="btn" value="Add Comment">
