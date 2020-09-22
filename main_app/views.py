@@ -34,6 +34,7 @@ def breweries_index(request):
     # breweries = Brewery.objects.filter(user=request.user)
     by_state = None
     by_city = None
+    by_postal = None
     if 'state' in request.GET:
         state = request.GET['state']
         s = requests.get(f'https://api.openbrewerydb.org/breweries?by_state={state}&per_page=50')
@@ -50,11 +51,8 @@ def breweries_index(request):
 
 
 def breweries_detail(request, brewery_id):
-    # brewery = Brewery.objects.get(id=brewery_id)
-    for brewery in breweries:
-        if brewery['id'] == brewery_id:
-            print(brewery)
-    print(brewery_id)
+    d = requests.get(f'https://api.openbrewerydb.org/breweries/{brewery_id}')
+    brewery = d.json()
     return render(request, 'breweries/detail.html', {'brewery': brewery})
 
 def add_comment(request, brewery_id):
