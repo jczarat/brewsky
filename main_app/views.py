@@ -51,6 +51,7 @@ def breweries_index(request):
 
 
 def breweries_detail(request, brewery_id):
+    print(brewery_id)
     comment_form = CommentForm()
     d = requests.get(f'https://api.openbrewerydb.org/breweries/{brewery_id}')
     brewery = d.json()
@@ -69,8 +70,9 @@ def breweries_detail(request, brewery_id):
             phone = brewery['phone'],
             website_url = brewery['website_url']
         )
-    get_id = Brewery.objects.get(api_id=brewery_id)
-    comments = Comment.objects.filter(brewery=get_id)
+    db_brewery = Brewery.objects.get(api_id=brewery_id)
+    print(db_brewery.state)
+    comments = Comment.objects.filter(brewery=db_brewery.id)
     brewery_result = Brewery.objects.get(api_id=brewery_id)
 
     return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments})
