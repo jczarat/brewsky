@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>Thirsty for a cold brew? Let's find the closest brewery...</h1>
-    <form action="">
-        <input type="search" name="region" placeholder="Find a brewery by city, state, or zip" id="">
-    </form>
+<h1>Thirsty for a cold brew? Let's find the closest brewery...</h1>
 
-    {% endblock %}
+<h3>Search by State</h3>
+<form action="{% url 'index' %}">
+    <input type="search" name="state" placeholder="Find a brewery by state">
+    <input type="submit" value="Search">
+</form>
+
+<h3>Search by City</h3>
+<form action="{% url 'index' %}">
+    <input type="search" name="city" placeholder="Find a brewery by city">
+    <input type="submit" value="Search">
+</form>
+
+<h3>Search by Zip Code</h3>
+<form action="{% url 'index' %}">
+    <input type="search" name="postal" placeholder="Find a brewery by zip">
+    <input type="submit" value="Search">
+</form>
+
+{% endblock %}

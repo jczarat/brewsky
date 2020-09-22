@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Brewery, Comment
 from .forms import CommentForm
-import openbrewerydb
 
 # API Stuff
 b = requests.get('https://api.openbrewerydb.org/breweries')
@@ -33,15 +32,21 @@ def about(request):
 
 def breweries_index(request):
     # breweries = Brewery.objects.filter(user=request.user)
-    # state_filter = []
-    # for brewery in breweries:
-    #     if brewery["state"] == 'Arizona':
-    #         state_filter.append(brewery)
-    s = requests.get(f'https://api.openbrewerydb.org/breweries?by_state={}&per_page=50')
-    by_state = s.json()
-
-    
-    return render(request, 'breweries/index.html', {'breweries': breweries, 'by_state': by_state })
+    by_state = None
+    by_city = None
+    if 'state' in request.GET:
+        state = request.GET['state']
+        s = requests.get(f'https://api.openbrewerydb.org/breweries?by_state={state}&per_page=50')
+        by_state = s.json()
+    if 'city' in request.GET:
+        city = request.GET['city']
+        c = requests.get(f'https://api.openbrewerydb.org/breweries?by_city={city}&per_page=50')
+        by_city = c.json()
+    if 'postal' in request.GET:
+        postal = request.GET['postal']
+        p = requests.get(f'https://api.openbrewerydb.org/breweries?by_postal={postal}&per_page=50')
+        by_postal = p.json()
+    return render(request, 'breweries/index.html', {'breweries': breweries, 'by_state': by_state, 'by_city': by_city , 'by_postal': by_postal})
 
 
 def breweries_detail(request, brewery_id):
