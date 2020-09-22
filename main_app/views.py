@@ -9,17 +9,21 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Brewery
+from .models import Brewery, Comment
+from .forms import CommentForm
 
 # API Stuff
 my_key = os.environ['BREWERY_API_KEY']
-b = requests.get(f'https://sandbox-api.brewerydb.com/v2/breweries/?key={my_key}')
-l = requests.get(f'https://sandbox-api.brewerydb.com/v2/locations/?key={my_key}')
+b = requests.get(
+    f'https://sandbox-api.brewerydb.com/v2/breweries/?key={my_key}')
+l = requests.get(
+    f'https://sandbox-api.brewerydb.com/v2/locations/?key={my_key}')
 breweries = b.json()["data"]
 locations = l.json()["data"]
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
 BUCKET = 'catcollector-sei-9-cw'
+
 
 def home(request):
     return render(request, 'home.html')
@@ -33,15 +37,27 @@ def breweries_index(request):
     # breweries = Brewery.objects.filter(user=request.user)
     state_filter = []
     for location in locations:
-        print(location['region'])
-        if location["region"] == 'North Carolina':
+        if 'region' in location and location["region"] == 'New York':
             state_filter.append(location)
     return render(request, 'breweries/index.html', {'breweries': breweries, 'state_filter': state_filter})
 
 
-# def breweries_detail(request, brewery_id):
-#     # brewery = Brewery.objects.get(id=brewery_id)
-#     return render(request, 'breweries/detail.html', {'breweries': breweries})
+def breweries_detail(request, brewery_id):
+    # brewery = Brewery.objects.get(id=brewery_id)
+    for brewery in breweries:
+        if brewery['id'] == brewery_id:
+            print(brewery)
+    print(brewery_id)
+    return render(request, 'breweries/detail.html', {'brewery': brewery})
+
+def add_comment(request, brewery_id):
+    form = CommentForm(request.POST)
+    if (form.is_valid):
+        new_comment = form.save(commit=False)
+        new_comment.brewery_id = brewery_id
+        # new_comment.save()
+        print(new_comment)
+    return redirect('detail', brewery_id=brewery_id)
 
 
 # @login_required
