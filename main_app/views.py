@@ -69,18 +69,24 @@ def breweries_detail(request, brewery_id):
             phone = brewery['phone'],
             website_url = brewery['website_url']
         )
+    get_id = Brewery.objects.get(api_id=brewery_id)
+    comments = Comment.objects.filter(brewery=get_id)
     brewery_result = Brewery.objects.get(api_id=brewery_id)
-    print(brewery_result)    
-    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form':comment_form})
+
+    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments})
+
 
 def add_comment(request, brewery_id):
+    print(brewery_id)
     form = CommentForm(request.POST)
-    if (form.is_valid):
+    if form.is_valid():
         new_comment = form.save(commit=False)
         new_comment.brewery_id = brewery_id
-        # new_comment.save()
+        new_comment.user_id = request.user.id
+        new_comment.save()
         print(new_comment)
-    return redirect('detail', brewery_id=brewery_id)
+    brewery = Brewery.objects.get(id=brewery_id)
+    return redirect('detail', brewery_id=brewery.api_id)
 
 
 # @login_required
