@@ -2,5 +2,27 @@
 {% block content %}
 
 <h1>Brewery Details</h1>
+<img src="{{brewery.images.large}}" alt="">
+<h3>{{brewery.name}}</h3>
+<p>{{brewery.description}}</p>
+<a href="{{brewery.website}}">{{brewery.website}}</a>
+
+<form action="{% url 'add_comment' brewery.id %}" method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <input type="submit" class="btn" value="Add Comment">
+</form>
+
+<script>
+    const dateEl = document.getElementById('id_date');
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true
+    });
+    const selectEl = document.getElementById('id_meal');
+    M.FormSelect.init(selectEl);
+</script>
 
 {% endblock %}
