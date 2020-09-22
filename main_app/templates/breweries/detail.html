@@ -17,8 +17,8 @@
 {% for comment in comments %}
 <div class="card">
     <div class="card-content">
-        <span class="card-title">Comment</span>
-        <p>id: {{ comment.comment }}</p>
+        <span class="card-title"><strong>{{comment.username}}</strong></span>
+        <p> Comment: {{ comment.comment }}</p>
     </div>
 </div>
 {% endfor %}
