@@ -33,9 +33,9 @@ def breweries_index(request):
     # breweries = Brewery.objects.filter(user=request.user)
     state_filter = []
     for location in locations:
-        print(location['region'])
-        if location["region"] == 'North Carolina':
-            state_filter.append(location)
+        if 'region' in location:
+            if location["region"] == 'North Carolina':
+                state_filter.append(location)
     return render(request, 'breweries/index.html', {'breweries': breweries, 'state_filter': state_filter})
 
 
