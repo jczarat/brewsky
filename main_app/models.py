@@ -21,6 +21,6 @@ class Brewery(models.Model):
 
 
 class Comment(models.Model):
+    comment = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)
-    comment = models.CharField(max_length=200)

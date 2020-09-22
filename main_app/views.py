@@ -71,13 +71,13 @@ def breweries_detail(request, brewery_id):
     brewery_result = Brewery.objects.get(api_id=brewery_id)
     print(brewery_result)    
     return render(request, 'breweries/detail.html', {'brewery_result': brewery_result})
-
+@login_required
 def add_comment(request, brewery_id):
     form = CommentForm(request.POST)
-    if (form.is_valid):
+    if form.is_valid():
         new_comment = form.save(commit=False)
         new_comment.brewery_id = brewery_id
-        # new_comment.save()
+        new_comment.save()
         print(new_comment)
     return redirect('detail', brewery_id=brewery_id)
 

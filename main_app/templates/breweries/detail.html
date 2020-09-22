@@ -6,11 +6,18 @@
 <h3>Address: {{brewery_result.street}}</h3>
 
 <a href="{{brewery_result.website_url}}">{{brewery_result.website_url}}</a>
+<br/><br/><br/><br/>
 
 <form action="{% url 'add_comment' brewery_result.id %}" method="post">
     {% csrf_token %}
     {{ comment_form.as_p }}
-    <input type="submit" class="" value="Add Comment">
+    <input type="submit" value="Add Comment">
 </form>
+
+<script>
+    // initialize the meal select
+    var selectEl = document.getElementById('id_comment');
+    M.FormSelect.init(selectEl);
+  </script>
 
 {% endblock %}
