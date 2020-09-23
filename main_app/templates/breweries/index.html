@@ -4,46 +4,55 @@
 <h1>Brewery List</h1>
 
 {% if by_state %}
-    {% for brewery in by_state %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">{{ brewery.name }}</span>
-                <p>City: {{brewery.city}}</p>
-                <p>Address: {{brewery.street}}</p>
-                <p>id: {{ brewery.id }}</p>
-                <a href="{% url 'detail' brewery.id %}">Details</a>
-            </div>
-        </div>
-    {% endfor %}
+{% for brewery in by_state %}
+<div class="">
+    <div class="">
+        <span class="">{{ brewery.name }}</span>
+        <p>City: {{brewery.city}}</p>
+        <p>Address: {{brewery.street}}</p>
+        <p>id: {{ brewery.id }}</p>
+        <a href="{% url 'detail' brewery.id %}">Details</a>
+    </div>
+</div>
+{% endfor %}
 {% endif %}
 
 {% if by_city %}
-    {% for brewery in by_city %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">{{ brewery.name }}</span>
-                <p>City: {{brewery.city}}</p>
-                <p>Address: {{brewery.street}}</p>
-                <p>id: {{ brewery.id }}</p>
-                <a href="{% url 'detail' brewery.id %}">Details</a>
-            </div>
-        </div>
-    {% endfor %}
+{% for brewery in by_city %}
+<div class="">
+    <div class="">
+        <span class="">{{ brewery.name }}</span>
+        <p>City: {{brewery.city}}</p>
+        <p>Address: {{brewery.street}}</p>
+        <p>id: {{ brewery.id }}</p>
+        <a href="{% url 'detail' brewery.id %}">Details</a>
+    </div>
+</div>
+{% endfor %}
 {% endif %}
 
 {% if by_postal %}
-    {% for brewery in by_postal %}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">{{ brewery.name }}</span>
-                <p>City: {{brewery.city}}</p>
-                <p>Address: {{brewery.street}}</p>
-                <p>id: {{ brewery.id }}</p>
-                <a href="{% url 'detail' brewery.id %}">Details</a>
-            </div>
-        </div>
-    {% endfor %}
+{% for brewery in by_postal %}
+<div class="">
+    <div class="">
+        <span class="">{{ brewery.name }}</span>
+        <p>City: {{brewery.city}}</p>
+        <p>Address: {{brewery.street}}</p>
+        <p>id: {{ brewery.id }}</p>
+        <a href="{% url 'detail' brewery.id %}">Details</a>
+    </div>
+</div>
+{% endfor %}
 {% endif %}
-
+<nav class="pagination" role="navigation" aria-label="pagination">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Previous Page" name="previous" class="pagination-previous">
+    </form>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Next Page" name="next" class="pagination-next">
+    </form>
+</nav>
 
 {% endblock %}

@@ -20,6 +20,7 @@
         <span class="card-title"><strong>{{comment.username}}</strong></span>
         <p> Comment: {{ comment.comment }}</p>
     </div>
+    {% if request.user.id == comment.user_fk_id %}
     <form action="{% url 'delete_comment' brewery_result.api_id comment.id %}" method="post">
         {% csrf_token %}
         <input type="submit" class="button is-danger" value="Delete Comment">
@@ -28,7 +29,10 @@
         {% csrf_token %}
         <input type="submit" class="button is-warning is-light" value="Update Comment">
     </form>
+    {% endif %}
 </div>
+
+
 {% endfor %}
 
 
