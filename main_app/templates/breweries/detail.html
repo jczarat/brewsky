@@ -25,7 +25,7 @@
         {% csrf_token %}
         <input type="submit" class="button is-danger" value="Delete Comment">
     </form>
-    <form action="{% url 'update_comment' brewery_result.api_id comment.id %}" method="post">
+    <form action="{% url 'update_comment' brewery_result.api_id comment.id %}">
         {% csrf_token %}
         <input type="submit" class="button is-warning is-light" value="Update Comment">
     </form>

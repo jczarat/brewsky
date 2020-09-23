@@ -24,8 +24,7 @@ BUCKET = 'catcollector-sei-9-cw'
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
     fields = ['comment']
-    # def comment_update(request):
-    #     return render 
+
 
 def home(request):
     return render(request, 'home.html')
@@ -41,19 +40,21 @@ def breweries_index(request):
     by_city = None
     by_postal = None
     pnum = 1
-    if request.POST:
-        pnum = pnum + 1
+    if request.POST and 'next' in request.POST:
+        pnum = int(request.POST['next']) + 1
+    if request.POST and 'previous' in request.POST and int(request.POST['previous']) > 1:
+        pnum = int(request.POST['previous']) - 1
     if 'state' in request.GET:
         state = request.GET['state']
         s = requests.get(f'https://api.openbrewerydb.org/breweries?by_state={state}&per_page=50&page={pnum}')
         by_state = s.json()
     if 'city' in request.GET:
         city = request.GET['city']
-        c = requests.get(f'https://api.openbrewerydb.org/breweries?by_city={city}&per_page=50')
+        c = requests.get(f'https://api.openbrewerydb.org/breweries?by_city={city}&per_page=50&page={pnum}')
         by_city = c.json()
     if 'postal' in request.GET:
         postal = request.GET['postal']
-        p = requests.get(f'https://api.openbrewerydb.org/breweries?by_postal={postal}&per_page=50')
+        p = requests.get(f'https://api.openbrewerydb.org/breweries?by_postal={postal}&per_page=50%page={pnum}')
         by_postal = p.json()
     return render(request, 'breweries/index.html', {'breweries': breweries, 'by_state': by_state, 'by_city': by_city , 'by_postal': by_postal, "pnum": pnum})
 
