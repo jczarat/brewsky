@@ -2,6 +2,22 @@
 {% block content %}
 
 <h1>Brewery List</h1>
+<h1>Page {{ pnum }}</h1>
+
+<nav class="pagination" role="navigation" aria-label="pagination">
+    {% if pnum > 1 %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" value="{{ pnum }}" name="previous" class="pagination-previous">Previous Page</button>
+    </form>
+    {% endif %}
+    {% if by_state or by_city or by_postal %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" value="{{ pnum }}" name="next" class="pagination-previous">Next Page</button>
+    </form>
+    {% endif %}
+</nav>
 
 {% if by_state %}
 {% for brewery in by_state %}
@@ -45,14 +61,18 @@
 {% endfor %}
 {% endif %}
 <nav class="pagination" role="navigation" aria-label="pagination">
+    {% if pnum > 1 %}
     <form action="" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Previous Page" name="previous" class="pagination-previous">
+        <button type="submit" value="{{ pnum }}" name="previous" class="pagination-previous">Previous Page</button>
     </form>
+    {% endif %}
+    {% if by_state or by_city or by_postal %}
     <form action="" method="POST">
         {% csrf_token %}
-        <input type="submit" value="{{ pnum }}" name="next" class="pagination-next">
+        <button type="submit" value="{{ pnum }}" name="next" class="pagination-previous">Next Page</button>
     </form>
+    {% endif %}
 </nav>
 
 {% endblock %}
