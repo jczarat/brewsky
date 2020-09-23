@@ -39,9 +39,6 @@ def breweries_index(request):
     by_state = None
     by_city = None
     by_postal = None
-    pnum = 1
-    if request.POST:
-        pnum = pnum + 1
     if 'state' in request.GET:
         state = request.GET['state']
         s = requests.get(f'https://api.openbrewerydb.org/breweries?by_state={state}&per_page=50&page={pnum}')

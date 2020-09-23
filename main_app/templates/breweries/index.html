@@ -51,7 +51,7 @@
     </form>
     <form action="" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Next Page" name="next" class="pagination-next">
+        <input type="submit" value="{{ pnum }}" name="next" class="pagination-next">
     </form>
 </nav>
 
