@@ -11,7 +11,7 @@
 <form action="{% url 'add_comment' brewery_result.id %}" method="post">
     {% csrf_token %}
     {{ comment_form.as_p }}
-    <input type="submit" value="Add Comment">
+    <input type="submit" class="button is-info" value="Add Comment">
 </form>
 
 {% for comment in comments %}
@@ -20,6 +20,10 @@
         <span class="card-title"><strong>{{comment.username}}</strong></span>
         <p> Comment: {{ comment.comment }}</p>
     </div>
+    <form action="{% url 'delete_comment' brewery_result.api_id comment.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" class="button is-small is-danger" value="Delete Comment">
+    </form>
 </div>
 {% endfor %}
 

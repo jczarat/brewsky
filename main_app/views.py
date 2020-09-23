@@ -51,7 +51,6 @@ def breweries_index(request):
 
 
 def breweries_detail(request, brewery_id):
-    print(brewery_id)
     comment_form = CommentForm()
     d = requests.get(f'https://api.openbrewerydb.org/breweries/{brewery_id}')
     brewery = d.json()
@@ -71,7 +70,6 @@ def breweries_detail(request, brewery_id):
             website_url = brewery['website_url']
         )
     db_brewery = Brewery.objects.get(api_id=brewery_id)
-    print(db_brewery.state)
     comments = Comment.objects.filter(brewery=db_brewery.id)
     brewery_result = Brewery.objects.get(api_id=brewery_id)
 
@@ -79,7 +77,6 @@ def breweries_detail(request, brewery_id):
 
 @login_required
 def add_comment(request, brewery_id):
-    print(brewery_id)
     form = CommentForm(request.POST)
     if form.is_valid():
         new_comment = form.save(commit=False)
@@ -87,9 +84,13 @@ def add_comment(request, brewery_id):
         new_comment.user_fk_id = request.user.id
         new_comment.username = request.user.username
         new_comment.save()
-        print(new_comment)
     brewery = Brewery.objects.get(id=brewery_id)
     return redirect('detail', brewery_id=brewery.api_id)
+
+
+def delete_comment(request, brewery_id, comment_id):
+    Comment.objects.filter(id=comment_id).delete()
+    return redirect('detail', brewery_id=brewery_id)
 
 
 # @login_required
