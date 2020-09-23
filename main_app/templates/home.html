@@ -1,24 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Thirsty for a cold brew? Let's find the closest brewery...</h1>
+<div class="container is-fluid">
 
-<h3>Search by State</h3>
-<form action="{% url 'index' %}">
-    <input type="search" name="state" placeholder="Find a brewery by state">
-    <input type="submit" value="Search">
-</form>
+    <h1 class="is-size-4">Thirsty for a cold brew? Let's find the closest brewery...</h1>
 
-<h3>Search by City</h3>
-<form action="{% url 'index' %}">
-    <input type="search" name="city" placeholder="Find a brewery by city">
-    <input type="submit" value="Search">
-</form>
+    <label class="label is-large">Search by State</label>
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <form action="{% url 'index' %}">
+                <input type="search" name="state" class="input is-large" placeholder="Find a brewery by state.">
+        </div>
+        <div class="control">
+            <input type="submit" value="Search" class="button is-light is-large">
+            </form>
+        </div>
+    </div>
 
-<h3>Search by Zip Code</h3>
-<form action="{% url 'index' %}">
-    <input type="search" name="postal" placeholder="Find a brewery by zip">
-    <input type="submit" value="Search">
-</form>
+    <label class="label is-large">Search By City</label>
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <form action="{% url 'index' %}">
+                <input type="search" name="city" class="input is-large" placeholder="Find a brewery by city.">
+        </div>
+        <div class="control">
+            <input type="submit" value="Search" class="button is-light is-large">
+            </form>
+        </div>
+    </div>
+
+
+    <label class="label is-large">Search By Zip Code</label>
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <form action="{% url 'index' %}">
+                <input type="search" name="postal" class="input is-large" placeholder="Find a brewery by zip">
+        </div>
+        <div class="control">
+            <input type="submit" value="Search" class="button is-light is-large">
+            </form>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}
