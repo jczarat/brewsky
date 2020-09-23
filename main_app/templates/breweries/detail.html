@@ -22,7 +22,11 @@
     </div>
     <form action="{% url 'delete_comment' brewery_result.api_id comment.id %}" method="post">
         {% csrf_token %}
-        <input type="submit" class="button is-small is-danger" value="Delete Comment">
+        <input type="submit" class="button is-danger" value="Delete Comment">
+    </form>
+    <form action="{% url 'update_comment' brewery_result.api_id comment.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" class="button is-warning is-light" value="Update Comment">
     </form>
 </div>
 {% endfor %}

@@ -87,10 +87,14 @@ def add_comment(request, brewery_id):
     brewery = Brewery.objects.get(id=brewery_id)
     return redirect('detail', brewery_id=brewery.api_id)
 
-
+@login_required
 def delete_comment(request, brewery_id, comment_id):
     Comment.objects.filter(id=comment_id).delete()
     return redirect('detail', brewery_id=brewery_id)
+
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    fields = ['comment']
 
 
 # @login_required
