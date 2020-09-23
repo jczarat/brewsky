@@ -21,6 +21,11 @@ breweries = b.json()
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
 BUCKET = 'catcollector-sei-9-cw'
 
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    fields = ['comment']
+    # def comment_update(request):
+    #     return render 
 
 def home(request):
     return render(request, 'home.html')
@@ -75,6 +80,7 @@ def breweries_detail(request, brewery_id):
 
     return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments})
 
+
 @login_required
 def add_comment(request, brewery_id):
     form = CommentForm(request.POST)
@@ -91,11 +97,6 @@ def add_comment(request, brewery_id):
 def delete_comment(request, brewery_id, comment_id):
     Comment.objects.filter(id=comment_id).delete()
     return redirect('detail', brewery_id=brewery_id)
-
-class CommentUpdate(LoginRequiredMixin, UpdateView):
-    model = Comment
-    fields = ['comment']
-
 
 # @login_required
 # def add_photo(request, cat_id):
