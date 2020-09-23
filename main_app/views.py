@@ -24,8 +24,7 @@ BUCKET = 'catcollector-sei-9-cw'
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
     fields = ['comment']
-    # def comment_update(request):
-    #     return render 
+
 
 def home(request):
     return render(request, 'home.html')
