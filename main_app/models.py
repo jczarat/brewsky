@@ -33,3 +33,11 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'brewery_id': self.brewery.api_id})
+
+
+class Favorite(models.Model):
+    user_fk = models.ForeignKey(User, on_delete=models.CASCADE)
+    brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'brewery_id': self.brewery.api_id})

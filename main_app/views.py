@@ -9,8 +9,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Brewery, Comment
-from .forms import CommentForm
+from .models import Brewery, Comment, Favorite
+from .forms import CommentForm, FavoriteForm
 
 # API Stuff
 b = requests.get('https://api.openbrewerydb.org/breweries')
@@ -60,6 +60,7 @@ def breweries_index(request):
 
 def breweries_detail(request, brewery_id):
     comment_form = CommentForm()
+    favorite_form = FavoriteForm()
     d = requests.get(f'https://api.openbrewerydb.org/breweries/{brewery_id}')
     brewery = d.json()
     if Brewery.objects.filter(api_id=brewery['id']).exists() == False:
@@ -83,13 +84,10 @@ def breweries_detail(request, brewery_id):
         total =  total + int(comment.rating)
     if len(comments):
         average_rating = total / len(comments)
-    print(total)
-    print(average_rating)
     brewery_result = Brewery.objects.get(api_id=brewery_id)
     test = brewery['brewery_type'].capitalize()
-    print(test)
     gm_token = os.environ['GOOGLE_MAPS_TOKEN']
-    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments, 'gm_token': gm_token, 'average_rating': average_rating})
+    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments, 'gm_token': gm_token, 'average_rating': average_rating, 'favorite_form': favorite_form})
 
 
 @login_required
@@ -105,8 +103,26 @@ def add_comment(request, brewery_id):
     return redirect('detail', brewery_id=brewery.api_id)
 
 @login_required
+def add_favorite(request, brewery_id):
+    form = FavoriteForm(request.POST)
+    favorites = Favorite.objects.filter(user_fk=request.user.id)
+    if form.is_valid() and len(favorites) < 5:
+        new_favorite = form.save(commit=False)
+        new_favorite.brewery_id = brewery_id
+        new_favorite.user_fk_id = request.user.id
+        new_favorite.save()
+    brewery = Brewery.objects.get(id=brewery_id)
+    return redirect('detail', brewery_id=brewery.api_id)
+    
+
+@login_required
 def delete_comment(request, brewery_id, comment_id):
     Comment.objects.filter(id=comment_id).delete()
+    return redirect('detail', brewery_id=brewery_id)
+
+@login_required
+def delete_favorite(request, brewery_id, favorite_id):
+    Favorite.objects.filter(id=favorite_id).delete()
     return redirect('detail', brewery_id=brewery_id)
 
 # @login_required

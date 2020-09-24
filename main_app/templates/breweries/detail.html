@@ -85,4 +85,26 @@
 
 </div>
 
+
+
+<form action="{% url 'add_favorite' brewery_result.id %}" method="post" class='mb-6'>
+    {% csrf_token %}
+    <div class="field">
+        <label class="label">Add Favorite</label>
+        <div class="control">
+            <input type="submit" class="button is-info mt-3" value="Add Favorite">
+        </div>
+    </div>
+</form>
+
+<form action="{% url 'delete_favorite' brewery_result.api_id favorite.id %}" method="post" class='mb-6'>
+    {% csrf_token %}
+    <div class="field">
+        <label class="label">Delete Favorite</label>
+        <div class="control">
+            <input type="submit" class="button is-info mt-3" value="Delete Favorite">
+        </div>
+    </div>
+</form>
+
 {% endblock %}
