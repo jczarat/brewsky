@@ -1,33 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<h1>Brewery List</h1>
-<h1>Page {{ pnum }}</h1>
-
+<div class="block">
+    <div class="notification">
+<h1 class="title has-text-centered">Brewery List</h1>
+<h1 class="tag is-light">Page {{ pnum }}</h1>
+</div>
+</div>
+<br>
 <nav class="pagination" role="navigation" aria-label="pagination">
     {% if pnum > 1 %}
     <form action="" method="POST">
         {% csrf_token %}
-        <button type="submit" value="{{ pnum }}" name="previous" class="pagination-previous">Previous Page</button>
+        <button type="submit" value="{{ pnum }}" name="previous" class="button is-light">Previous Page</button>
     </form>
     {% endif %}
     {% if by_state or by_city or by_postal %}
     <form action="" method="POST">
         {% csrf_token %}
-        <button type="submit" value="{{ pnum }}" name="next" class="pagination-previous">Next Page</button>
+        <button type="submit" value="{{ pnum }}" name="next" class="button is-light">Next Page</button>
     </form>
     {% endif %}
 </nav>
 
 {% if by_state %}
 {% for brewery in by_state %}
-<div class="">
-    <div class="">
-        <span class="">{{ brewery.name }}</span>
-        <p>City: {{brewery.city}}</p>
-        <p>Address: {{brewery.street}}</p>
-        <p>id: {{ brewery.id }}</p>
-        <a href="{% url 'detail' brewery.id %}">Details</a>
+<div class="container">
+    <div class="tile is-parent  is-8">
+        
+    <article class="tile is-child box">
+        <p class="title mb-6">{{ brewery.name }}</p>
+        <p class="subtitle">City: {{brewery.city}}</p>
+        <p class="subtitle">State: {{brewery.state}}</p>
+        <p class="subtitle">id: {{ brewery.id }}</p>
+        <a class="button is-light" href="{% url 'detail' brewery.id %}">Details</a>
+    </article>
+       
     </div>
 </div>
 {% endfor %}
@@ -35,27 +42,31 @@
 
 {% if by_city %}
 {% for brewery in by_city %}
-<div class="">
-    <div class="">
-        <span class="">{{ brewery.name }}</span>
-        <p>City: {{brewery.city}}</p>
-        <p>Address: {{brewery.street}}</p>
-        <p>id: {{ brewery.id }}</p>
-        <a href="{% url 'detail' brewery.id %}">Details</a>
-    </div>
+<div class="container">
+<div class="tile is-parent  is-8">
+    <article class="tile is-child box">
+        <p class="title mb-6">{{ brewery.name }}</p>
+        <p class="subtitle">City: {{brewery.city}}</p>
+        <p class="subtitle">State: {{brewery.state}}</p>
+        <p class="subtitle">id: {{ brewery.id }}</p>
+        <a class="button is-light" href="{% url 'detail' brewery.id %}">Details</a>
+    </article>
+</div>
 </div>
 {% endfor %}
 {% endif %}
 
 {% if by_postal %}
 {% for brewery in by_postal %}
-<div class="">
-    <div class="">
-        <span class="">{{ brewery.name }}</span>
-        <p>City: {{brewery.city}}</p>
-        <p>Address: {{brewery.street}}</p>
-        <p>id: {{ brewery.id }}</p>
+<div class="container">
+    <div class="tile is-parent  is-8">
+        <article class="tile is-child box">
+        <p class="title mb-6">{{ brewery.name }}</p>
+        <p class="subtitle">City: {{brewery.city}}</p>
+        <p class="subtitle">State: {{brewery.state}}</p>
+        <p class="subtitle">id: {{ brewery.id }}</p>
         <a href="{% url 'detail' brewery.id %}">Details</a>
+    </article>
     </div>
 </div>
 {% endfor %}
@@ -64,13 +75,13 @@
     {% if pnum > 1 %}
     <form action="" method="POST">
         {% csrf_token %}
-        <button type="submit" value="{{ pnum }}" name="previous" class="pagination-previous">Previous Page</button>
+        <button type="submit" value="{{ pnum }}" name="previous" class="button is-light">Previous Page</button>
     </form>
     {% endif %}
     {% if by_state or by_city or by_postal %}
     <form action="" method="POST">
         {% csrf_token %}
-        <button type="submit" value="{{ pnum }}" name="next" class="pagination-previous">Next Page</button>
+        <button type="submit" value="{{ pnum }}" name="next" class="button is-light">Next Page</button>
     </form>
     {% endif %}
 </nav>

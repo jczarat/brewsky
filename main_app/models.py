@@ -14,8 +14,6 @@ class Brewery(models.Model):
     state = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
-    longitude = models.CharField(max_length=100)
-    latitude = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     website_url = models.CharField(max_length=100)
 

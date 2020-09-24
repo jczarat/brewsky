@@ -72,8 +72,6 @@ def breweries_detail(request, brewery_id):
             state = brewery['state'],
             postal_code = brewery['postal_code'],
             country = brewery['country'],
-            longitude = brewery['longitude'],
-            latitude = brewery['latitude'],
             phone = brewery['phone'][:3] + '-' + brewery['phone'][3:6] + '-' + brewery['phone'][6:],
             website_url = brewery['website_url']
         )
