@@ -120,10 +120,15 @@ def delete_comment(request, brewery_id, comment_id):
     Comment.objects.filter(id=comment_id).delete()
     return redirect('detail', brewery_id=brewery_id)
 
+# @login_required
+# def delete_favorite(request, brewery_id, favorite_id):
+#     Favorite.objects.filter(id=favorite_id).delete()
+#     return redirect('detail', brewery_id=brewery_id)
+
 @login_required
-def delete_favorite(request, brewery_id, favorite_id):
-    Favorite.objects.filter(id=favorite_id).delete()
-    return redirect('detail', brewery_id=brewery_id)
+def favorite_index(request):
+    favorites = Favorite.objects.filter(user_fk=request.use.id)
+    return render(request, 'favorites.html', {'favorites': favorites})
 
 # @login_required
 # def add_photo(request, cat_id):
