@@ -60,7 +60,6 @@ def breweries_index(request):
 
 def breweries_detail(request, brewery_id):
     comment_form = CommentForm()
-    favorite_form = FavoriteForm()
     d = requests.get(f'https://api.openbrewerydb.org/breweries/{brewery_id}')
     brewery = d.json()
     if Brewery.objects.filter(api_id=brewery['id']).exists() == False:
@@ -78,6 +77,7 @@ def breweries_detail(request, brewery_id):
         )
     db_brewery = Brewery.objects.get(api_id=brewery_id)
     comments = Comment.objects.filter(brewery=db_brewery.id)
+    favorites = Favorite.objects.filter(brewery=db_brewery.id)
     total = 0
     average_rating = None
     for comment in comments:
@@ -87,7 +87,7 @@ def breweries_detail(request, brewery_id):
     brewery_result = Brewery.objects.get(api_id=brewery_id)
     test = brewery['brewery_type'].capitalize()
     gm_token = os.environ['GOOGLE_MAPS_TOKEN']
-    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments, 'gm_token': gm_token, 'average_rating': average_rating, 'favorite_form': favorite_form})
+    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments, 'gm_token': gm_token, 'average_rating': average_rating})
 
 
 @login_required
