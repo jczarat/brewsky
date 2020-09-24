@@ -22,7 +22,7 @@ BUCKET = 'catcollector-sei-9-cw'
 
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
-    fields = ['comment']
+    fields = ['comment', 'rating']
 
 
 def home(request):
@@ -77,11 +77,17 @@ def breweries_detail(request, brewery_id):
         )
     db_brewery = Brewery.objects.get(api_id=brewery_id)
     comments = Comment.objects.filter(brewery=db_brewery.id)
+    total = 0
+    for comment in comments:
+        total =  total + int(comment.rating)
+    average_rating = total / len(comments)
+    print(total)
+    print(average_rating)
     brewery_result = Brewery.objects.get(api_id=brewery_id)
     test = brewery['brewery_type'].capitalize()
     print(test)
     gm_token = os.environ['GOOGLE_MAPS_TOKEN']
-    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments, 'gm_token': gm_token})
+    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments, 'gm_token': gm_token, 'average_rating': average_rating})
 
 
 @login_required
