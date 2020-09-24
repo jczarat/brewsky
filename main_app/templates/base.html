@@ -33,7 +33,7 @@
                         Home
                     </a>
                     {% if user.is_authenticated %}
-                    <a href="{% url 'index' %}" class="navbar-item is-size-4 has-text-weight-semibold">
+                    <a href="{% url 'favorites_index' %}" class="navbar-item is-size-4 has-text-weight-semibold">
                         My Breweries
                     </a>
                     {% endif %}

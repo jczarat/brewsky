@@ -10,6 +10,6 @@ urlpatterns = [
     path('breweries/<int:brewery_id>/delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
     path('breweries/<int:brewery_id>/update_comment/<int:pk>/', views.CommentUpdate.as_view(), name='update_comment'),
     path('breweries/<int:brewery_id>/add_favorite/', views.add_favorite, name='add_favorite'),
-    path('breweries/<int:brewery_id>/delete_favorite/<int:favorite_id>/', views.delete_favorite, name='delete_favorite'),
+    path('favorites/', views.favorites_index, name='favorites_index'),
     path('accounts/signup/', views.signup, name='signup'),
 ]
