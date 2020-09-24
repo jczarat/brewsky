@@ -78,9 +78,11 @@ def breweries_detail(request, brewery_id):
     db_brewery = Brewery.objects.get(api_id=brewery_id)
     comments = Comment.objects.filter(brewery=db_brewery.id)
     total = 0
+    average_rating = None
     for comment in comments:
         total =  total + int(comment.rating)
-    average_rating = total / len(comments)
+    if len(comments):
+        average_rating = total / len(comments)
     print(total)
     print(average_rating)
     brewery_result = Brewery.objects.get(api_id=brewery_id)
