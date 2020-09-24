@@ -22,6 +22,7 @@ class Brewery(models.Model):
     country = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     website_url = models.CharField(max_length=100)
+    favorites = models.ManyToManyField(User)
 
 
 class Comment(models.Model):
@@ -34,10 +35,3 @@ class Comment(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'brewery_id': self.brewery.api_id})
 
-
-class Favorite(models.Model):
-    user_fk = models.ForeignKey(User, on_delete=models.CASCADE)
-    brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)
-
-    def get_absolute_url(self):
-        return reverse('detail', kwargs={'brewery_id': self.brewery.api_id})
