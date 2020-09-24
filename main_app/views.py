@@ -14,7 +14,6 @@ from .forms import CommentForm
 
 # API Stuff
 b = requests.get('https://api.openbrewerydb.org/breweries')
-
 breweries = b.json()
 
 
@@ -67,7 +66,7 @@ def breweries_detail(request, brewery_id):
         new_brewery = Brewery.objects.create(
             api_id = brewery['id'],
             name = brewery['name'],
-            brewery_type = brewery['brewery_type'],
+            brewery_type = brewery['brewery_type'].capitalize(),
             street = brewery['street'],
             city = brewery['city'],
             state = brewery['state'],
@@ -75,14 +74,16 @@ def breweries_detail(request, brewery_id):
             country = brewery['country'],
             longitude = brewery['longitude'],
             latitude = brewery['latitude'],
-            phone = brewery['phone'],
+            phone = brewery['phone'][:3] + '-' + brewery['phone'][3:6] + '-' + brewery['phone'][6:],
             website_url = brewery['website_url']
         )
     db_brewery = Brewery.objects.get(api_id=brewery_id)
     comments = Comment.objects.filter(brewery=db_brewery.id)
     brewery_result = Brewery.objects.get(api_id=brewery_id)
-
-    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments})
+    test = brewery['brewery_type'].capitalize()
+    print(test)
+    gm_token = os.environ['GOOGLE_MAPS_TOKEN']
+    return render(request, 'breweries/detail.html', {'brewery_result': brewery_result, 'comment_form': comment_form, 'comments': comments, 'gm_token': gm_token})
 
 
 @login_required
