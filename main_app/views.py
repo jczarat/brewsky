@@ -121,10 +121,12 @@ def delete_comment(request, brewery_id, comment_id):
     Comment.objects.filter(id=comment_id).delete()
     return redirect('detail', brewery_id=brewery_id)
 
-# @login_required
-# def delete_favorite(request, brewery_id, favorite_id):
-#     Favorite.objects.filter(id=favorite_id).delete()
-#     return redirect('detail', brewery_id=brewery_id)
+@login_required
+def delete_favorite(request, brewery_id):
+    brewery = Brewery.objects.get(id=brewery_id)
+    request.user.brewery_set.remove(brewery)
+    print(brewery)
+    return redirect('favorites_index')
 
 
 @login_required
