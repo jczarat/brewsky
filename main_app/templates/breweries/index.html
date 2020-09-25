@@ -4,23 +4,28 @@
 
 <div class="block">
     <div class="notification">
-        <h1 class="title has-text-centered">Brewery List</h1>
-        <h1 class="tag is-light">Page {{ pnum }}</h1>
+        {% if state %}
+        <h1 class="title has-text-centered is-size-1 is-size-4-mobile">Breweries in {{ state }}</h1>
+        {% elif city %}
+        <h1 class="title has-text-centered is-size-1 is-size-4-mobile">Breweries in {{ city }}</h1>
+        {% else %}
+        <h1 class="title has-text-centered is-size-1 is-size-4-mobile">Breweries in {{ postal }}</h1>
+        {% endif %}
+        <h1 class="subtitle is-size-4 is-size-6-mobile is-light has-text-centered">Page {{ pnum }}</h1>
     </div>
 </div>
 <br>
 
 <div class="container is-fluid">
-
     <nav class="pagination" role="navigation" aria-label="pagination">
         {% if pnum > 1 %}
-        <form action="" method="POST">
+        <form action="" method="POST" class="mr-3 ml-3">
             {% csrf_token %}
             <button type="submit" value="{{ pnum }}" name="previous" class="button is-light">Previous Page</button>
         </form>
         {% endif %}
         {% if by_state or by_city or by_postal %}
-        <form action="" method="POST">
+        <form action="" method="POST" class="mr-3 ml-3">
             {% csrf_token %}
             <button type="submit" value="{{ pnum }}" name="next" class="button is-light">Next Page</button>
         </form>
@@ -30,15 +35,16 @@
     {% if by_state %}
     {% for brewery in by_state %}
     <div class="container">
-        <div class="tile is-parent  is-8">
-
-            <article class="tile is-child box">
-                <p class="title mb-6">{{ brewery.name }}</p>
-                <p class="subtitle">City: {{brewery.city}}</p>
-                <p class="subtitle">State: {{brewery.state}}</p>
-                <a class="button is-light" href="{% url 'detail' brewery.id %}">Details</a>
+        <div class="tile is-parent">
+            <article class="tile is-child box notification columns">
+                <div class="column is-three-quarters">
+                    <p class="title is-size-5-mobile">{{ brewery.name }}</p>
+                    <p class="subtitle is-size-6-mobile">{{brewery.city}}, {{brewery.state}}</p>
+                </div>
+                <div class="column has-text-right">
+                    <a class="button is-dark is-fullwidth" href="{% url 'detail' brewery.id %}">Details</a>
+                </div>
             </article>
-
         </div>
     </div>
     {% endfor %}
@@ -47,12 +53,11 @@
     {% if by_city %}
     {% for brewery in by_city %}
     <div class="container">
-        <div class="tile is-parent  is-8">
-            <article class="tile is-child box">
-                <p class="title mb-6">{{ brewery.name }}</p>
-                <p class="subtitle">City: {{brewery.city}}</p>
-                <p class="subtitle">State: {{brewery.state}}</p>
-                <a class="button is-light" href="{% url 'detail' brewery.id %}">Details</a>
+        <div class="tile is-parent">
+            <article class="tile is-child box notification">
+                <p class="title">{{ brewery.name }}</p>
+                <p class="subtitle">{{brewery.city}}, {{brewery.state}}</p>
+                <a class="button is-dark" href="{% url 'detail' brewery.id %}">Details</a>
             </article>
         </div>
     </div>
@@ -62,31 +67,33 @@
     {% if by_postal %}
     {% for brewery in by_postal %}
     <div class="container">
-        <div class="tile is-parent  is-8">
-            <article class="tile is-child box">
-                <p class="title mb-6">{{ brewery.name }}</p>
-                <p class="subtitle">City: {{brewery.city}}</p>
-                <p class="subtitle">State: {{brewery.state}}</p>
-                <a class="button is-light" href="{% url 'detail' brewery.id %}">Details</a>
+        <div class="tile is-parent">
+            <article class="tile is-child box notification">
+                <p class="title">{{ brewery.name }}</p>
+                <p class="subtitle">{{brewery.city}}, {{brewery.state}}</p>
+                <a class="button is-dark" href="{% url 'detail' brewery.id %}">Details</a>
             </article>
         </div>
     </div>
     {% endfor %}
     {% endif %}
-    <nav class="pagination" role="navigation" aria-label="pagination">
+    <nav class="pagination mt-5" role="navigation" aria-label="pagination">
         {% if pnum > 1 %}
         <form action="" method="POST">
             {% csrf_token %}
-            <button type="submit" value="{{ pnum }}" name="previous" class="button is-light">Previous Page</button>
+            <button type="submit" value="{{ pnum }}" name="previous" class="button is-light mr-3 ml-3">Previous
+                Page</button>
         </form>
         {% endif %}
         {% if by_state or by_city or by_postal %}
         <form action="" method="POST">
             {% csrf_token %}
-            <button type="submit" value="{{ pnum }}" name="next" class="button is-light">Next Page</button>
+            <button type="submit" value="{{ pnum }}" name="next" class="button is-light ml-3 mr-3">Next Page</button>
         </form>
         {% endif %}
+
     </nav>
+    <h1 class="subtitle is-size-6 is-light has-text-centered">Page {{ pnum }}</h1>
 </div>
 
 {% endblock %}

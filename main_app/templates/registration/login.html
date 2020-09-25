@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="container is-fluid">
 
-<h1 class="label">Log In</h1>
 
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" class="button is-info" value="login">
-    <input type="hidden" name="next" value="{{ next }}">
-</form>
+    <div class="field">
+        <div class="control is-expanded mt-6">
+            <label class="label is-large">Login</label>
+            <form method="post" action="{% url 'login' %}"">
+                {% csrf_token %}
+                {{ form.as_p }}
+        </div>
+        <div class="control">
+            <input type="submit" class="button is-info mt-4" value="login">
+            <input type="hidden" name="next" value="{{ next }}">
+            </form>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}

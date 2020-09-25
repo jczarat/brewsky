@@ -6,27 +6,26 @@
     <div class="tile is-ancestor mt-4" height="400">
         <div class="tile is-4 is-vertical is-parent">
             <div class="tile is-child box notification is-dark">
-                <p class="title">{{brewery_result.name}}</p>
-                <p class="title is-size-4">{{brewery_result.phone}}</p>
-                <p class="title is-size-4">Average Rating: {{ average_rating|floatformat:'1' }}</p>
+                <p class="title is-size-5-mobile">{{brewery_result.name}}</p>
+                <p class="title is-size-4 is-size-6-mobile">Style: {{brewery_result.brewery_type}}</p>
+                <p class="title is-size-4 is-size-6-mobile">Average Rating: {{ average_rating|floatformat:'1' }}</p>
             </div>
             <div class="tile is-child box notification is-dark">
-                <p class="title is-size-6">{{brewery_result.street}},</p>
-                <p class="title is-size-6">{{brewery_result.city}}, {{brewery_result.state}},
-                    {{brewery_result.postal_code}}</p>
-                <p class="title is-size-6">{{ brewery_result.country }}</p>
+                <p class="title is-size-4 is-size-6-mobile">{{brewery_result.street}},</p>
+                <p class="title is-size-4 is-size-6-mobile">{{brewery_result.city}}, {{brewery_result.state}}</p>
+                <p class="title is-size-4 is-size-6-mobile">{{ brewery_result.country }}</p>
             </div>
             <div class="tile is-child box notification is-dark">
-                <p class="title is-size-4">Style: {{brewery_result.brewery_type}}</p>
+                <p class="title is-size-4 is-size-6-mobile">{{brewery_result.phone}}</p>
                 <a href="{{ brewery_result.website_url }}"
-                    class="title is-size-5 has-text-info">{{ brewery_result.website_url }}</a>
+                    class="title is-size-5 has-text-info is-size-6-mobile">{{ brewery_result.website_url }}</a>
             </div>
             <div class="tile is-child box notification is-dark">
-                <form action="{% url 'add_favorite' brewery_result.id %}" method="post" class='mb-6'>
+                <form action="{% url 'add_favorite' brewery_result.id %}" method="post">
                     {% csrf_token %}
                     <div class="field">
                         <div class="control">
-                            <label class="label has-text-white is-size-4">Save To My Breweries</label>
+                            <label class="label has-text-white is-size-4 is-size-6-mobile">Save To My Breweries</label>
                             <input type="submit" class="button is-info mt-4 is large is-fullwidth" value="Add Favorite">
                         </div>
                     </div>

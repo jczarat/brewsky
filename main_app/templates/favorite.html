@@ -12,10 +12,14 @@
 {% if breweries|length == 0 %}
 
 <div class="container">
-    <div class="tile is-parent  is-8">
-        <article class="tile is-child box">
-            <p class="title mb-6">You don't have any breweries saved yet!</p>
-            <a class="button is-light mb-2" href="{% url 'home' %}">Find a Brewery</a>
+    <div class="tile is-parent">
+        <article class="tile is-child box notification columns">
+            <div class="column is-three-quarters">
+                <p class="title is-size-5-mobile">No breweries saved yet!</p>
+            </div>
+            <div class="column has-text-right">
+                <a class="button is-dark is-fullwidth" href="{% url 'home' %}">Find a Brewery</a>
+            </div>
         </article>
     </div>
 </div>
@@ -26,17 +30,19 @@
 {% for brewery in breweries%}
 <div class="container">
 
-    <div class="tile is-parent  is-8">
-        <article class="tile is-child box">
-            <p class="title mb-6">{{ brewery.name }}</p>
-            <p class="subtitle">City: {{brewery.city}}</p>
-            <p class="subtitle">State: {{brewery.state}}</p>
-            <p class="subtitle">id: {{ brewery.id }}</p>
-            <a class="button is-light mb-2" href="{% url 'detail' brewery.api_id %}">Details</a>
-            <form action="{% url 'delete_favorite' brewery.id %}" method="post">
-                {% csrf_token %}
-                <input type="submit" class="button is-danger" value="Delete Favorite">
-            </form>
+    <div class="tile is-parent">
+        <article class="tile is-child box notification columns">
+            <div class="column is-three-quarters">
+                <p class="title is-size-5-mobile">{{ brewery.name }}</p>
+                <p class="subtitle is-size-6-mobile">{{brewery.city}}, {{brewery.state}}</p>
+            </div>
+            <div class="column has-text-right">
+                <a class="button is-dark mb-2 is-fullwidth" href="{% url 'detail' brewery.api_id %}">Details</a>
+                <form action="{% url 'delete_favorite' brewery.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="button is-danger is-fullwidth" value="Delete Favorite">
+                </form>
+            </div>
         </article>
     </div>
 </div>

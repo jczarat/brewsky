@@ -32,6 +32,9 @@ def breweries_index(request):
     by_state = None
     by_city = None
     by_postal = None
+    state = None
+    city = None
+    postal = None
     pnum = 1
     if request.POST and 'next' in request.POST:
         pnum = int(request.POST['next']) + 1
@@ -52,7 +55,16 @@ def breweries_index(request):
         p = requests.get(
             f'https://api.openbrewerydb.org/breweries?by_postal={postal}&per_page=50%page={pnum}')
         by_postal = p.json()
-    return render(request, 'breweries/index.html', {'breweries': breweries, 'by_state': by_state, 'by_city': by_city, 'by_postal': by_postal, "pnum": pnum})
+    return render(request, 'breweries/index.html', {
+            'breweries': breweries, 
+            'by_state': by_state, 
+            'by_city': by_city, 
+            'by_postal': by_postal, 
+            "pnum": pnum,
+            'state': state,
+            'city': city,
+            'postal': postal
+        })
 
 
 def breweries_detail(request, brewery_id):
