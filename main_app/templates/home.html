@@ -3,40 +3,46 @@
 
 <div class="container is-fluid">
 
-    <h1 class="is-size-4">Thirsty for a cold brew? Let's find the closest brewery...</h1>
+    <div class="container has-text-centered mt-4 mb-4">
+        <h1 class="is-size-3 is-size-4-mobile"><strong>Thirsty for a cold brew?</strong></h1>
+        <h1 class="is-size-4 is-size-6-mobile">Let's find the closest brewery...</h1>
+    </div>
 
-    <label class="label is-large">Search by State</label>
+    <label class="label is-large is-size-5-mobile">Search by State</label>
     <div class="field has-addons">
         <div class="control is-expanded">
             <form action="{% url 'index' %}">
-                <input type="search" name="state" class="input is-large" placeholder="Find a brewery by state.">
+                <input type="search" name="state" class="input is-large is-size-6-mobile"
+                    placeholder="Find a brewery by state.">
         </div>
         <div class="control">
-            <input type="submit" value="Search" class="button is-light is-large">
+            <input type="submit" value="Search" class="button is-light is-large is-size-6-mobile">
             </form>
         </div>
     </div>
 
-    <label class="label is-large">Search By City</label>
+    <label class="label is-large is-size-5-mobile">Search By City</label>
     <div class="field has-addons">
         <div class="control is-expanded">
             <form action="{% url 'index' %}">
-                <input type="search" name="city" class="input is-large" placeholder="Find a brewery by city.">
+                <input type="search" name="city" class="input is-large is-size-6-mobile"
+                    placeholder="Find a brewery by city.">
         </div>
         <div class="control">
-            <input type="submit" value="Search" class="button is-light is-large">
+            <input type="submit" value="Search" class="button is-light is-large is-size-6-mobile">
             </form>
         </div>
     </div>
 
-    <label class="label is-large">Search By Zip Code</label>
+    <label class="label is-large is-size-5-mobile">Search By Zip Code</label>
     <div class="field has-addons">
         <div class="control is-expanded">
             <form action="{% url 'index' %}">
-                <input type="search" name="postal" class="input is-large" placeholder="Find a brewery by zip">
+                <input type="search" name="postal" class="input is-large is-size-6-mobile"
+                    placeholder="Find a brewery by zip">
         </div>
         <div class="control">
-            <input type="submit" value="Search" class="button is-light is-large">
+            <input type="submit" value="Search" class="button is-light is-large is-size-6-mobile">
             </form>
         </div>
     </div>
