@@ -37,11 +37,11 @@ This goal for this app was to build something that allowed users to both find br
 
 ### Wireframes:
 
-Home Page Wireframe: <img src="https://wireframe.cc/4lmM8h" width="400">
+[Home Page Wireframe](https://wireframe.cc/4lmM8h)
 
-Index Page Wireframe: <img src="https://wireframe.cc/3TBbSq" width="400">
+[Index Page Wireframe](https://wireframe.cc/3TBbSq)
 
-Detail Page Wireframe: <img src="https://wireframe.cc/wT1Nw5" width="400">
+[Detail Page Wireframe](https://wireframe.cc/wT1Nw5)
 
 
 ### _Resources Used:_
