@@ -34,10 +34,9 @@
     <form action="{% url 'add_comment' brewery_result.id %}" method="post" class='mb-6'>
         {% csrf_token %}
         <div class="field">
-            <label class="label">Comment</label>
             <div class="control">
                 <label for="" class="label">Rating</label>
-                <p class="control">
+                <p class="control mb-4">
                     <span class="select"><select name="rating" id="">
                         <option value="">Select Dropdown</option>
                         <option value="1">1 star</option>
@@ -47,6 +46,7 @@
                         <option value="5">5 star</option>
                     </select></span>
                 </p>
+                <label class="label">Comment</label>
                 <textarea name="comment" class="textarea" placeholder=""></textarea>
                 <input type="submit" class="button is-info mt-3" value="Add Comment">
             </div>
@@ -83,18 +83,17 @@
     </article>
     {% endfor %}
 
+    <form action="{% url 'add_favorite' brewery_result.id %}" method="post" class='mb-6'>
+        {% csrf_token %}
+        <div class="field">
+            <label class="label">Save This Brewery To My Breweries</label>
+            <div class="control">
+                <input type="submit" class="button is-info mt-3" value="Add Favorite">
+            </div>
+        </div>
+    </form>
+
 </div>
 
-
-
-<form action="{% url 'add_favorite' brewery_result.id %}" method="post" class='mb-6'>
-    {% csrf_token %}
-    <div class="field">
-        <label class="label">Add Favorite</label>
-        <div class="control">
-            <input type="submit" class="button is-info mt-3" value="Add Favorite">
-        </div>
-    </div>
-</form>
 
 {% endblock %}
