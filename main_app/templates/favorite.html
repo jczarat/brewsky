@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="block">
+    <div class="notification">
+        <h1 class="title has-text-centered">My Breweries</h1>
+    </div>
+</div>
+<br>
+
+
+{% if breweries|length == 0 %}
+
+<div class="container">
+    <div class="tile is-parent  is-8">
+        <article class="tile is-child box">
+            <p class="title mb-6">You don't have any breweries saved yet!</p>
+            <a class="button is-light mb-2" href="{% url 'home' %}">Find a Brewery</a>
+        </article>
+    </div>
+</div>
+
+{% endif %}
+
 
 {% for brewery in breweries%}
 <div class="container">
@@ -12,11 +33,11 @@
             <p class="subtitle">State: {{brewery.state}}</p>
             <p class="subtitle">id: {{ brewery.id }}</p>
             <a class="button is-light mb-2" href="{% url 'detail' brewery.api_id %}">Details</a>
-        <form action="{% url 'delete_favorite' brewery.id %}" method="post">
-            {% csrf_token %}
-            <input type="submit" class="button is-danger" value="Delete Favorite">
-        </form>
-    </article>
+            <form action="{% url 'delete_favorite' brewery.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="button is-danger" value="Delete Favorite">
+            </form>
+        </article>
     </div>
 </div>
 {% endfor %}

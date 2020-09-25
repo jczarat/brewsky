@@ -1,5 +1,3 @@
-import uuid
-import boto3
 import os
 import requests
 from django.shortcuts import render, redirect
@@ -12,13 +10,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Brewery, Comment
 from .forms import CommentForm
 
-# API Stuff
+
 b = requests.get('https://api.openbrewerydb.org/breweries')
 breweries = b.json()
-
-
-S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
-BUCKET = 'catcollector-sei-9-cw'
 
 
 class CommentUpdate(LoginRequiredMixin, UpdateView):
@@ -35,7 +29,6 @@ def about(request):
 
 
 def breweries_index(request):
-    # breweries = Brewery.objects.filter(user=request.user)
     by_state = None
     by_city = None
     by_postal = None
@@ -107,7 +100,6 @@ def add_comment(request, brewery_id):
     return redirect('detail', brewery_id=brewery.api_id)
 
 
-
 @login_required
 def add_favorite(request, brewery_id):
     if Brewery.objects.filter(favorites__id=request.user.id).count() < 5:
@@ -125,7 +117,6 @@ def delete_comment(request, brewery_id, comment_id):
 def delete_favorite(request, brewery_id):
     brewery = Brewery.objects.get(id=brewery_id)
     request.user.brewery_set.remove(brewery)
-    print(brewery)
     return redirect('favorites_index')
 
 
@@ -135,38 +126,16 @@ def favorites_index(request):
     return render(request, 'favorite.html', {'breweries': breweries})
 
 
-# @login_required
-# def add_photo(request, cat_id):
-#   # photo-file will be the "name" attribute on the <input>
-#   photo_file = request.FILES.get('photo-file', None)
-#   if photo_file:
-#     s3 = boto3.client('s3')
-#     # need a unique "key" / but keep the file extension (image type)
-#     key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-#     # just in case we get an error
-#     try:
-#       s3.upload_fileobj(photo_file, BUCKET, key)
-#       url = f"{S3_BASE_URL}{BUCKET}/{key}"
-#       Photo.objects.create(url=url, cat_id=cat_id)
-#     except:
-#       print('An error occured uploading file to S3')
-#   return redirect('detail', cat_id=cat_id)
-
 def signup(request):
     error_message=''
     if request.method == 'POST':
-        # This is how to create a 'user' form object
-        # that includes the data from the browser
         form=UserCreationForm(request.POST)
         if form.is_valid():
-            # This will add the user to the database
             user=form.save()
-            # This is how we log a user in via code
             login(request, user)
             return redirect('index')
         else:
             error_message='Invalid sign up - try again'
-    # A bad POST or a GET request, so render signup.html with an empty form
     form=UserCreationForm()
     context={'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)

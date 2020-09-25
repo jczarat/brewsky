@@ -1,8 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
-# Import the User
 from django.contrib.auth.models import User
+
 RATING = (
     ('1', '1 Star'),
     ('2', '2 Stars'),
@@ -10,6 +10,7 @@ RATING = (
     ('4', '4 Stars'),
     ('5', '5 Stars'),
 )
+
 
 class Brewery(models.Model):
     api_id = models.IntegerField()
@@ -26,7 +27,8 @@ class Brewery(models.Model):
 
 
 class Comment(models.Model):
-    rating = models.CharField(max_length=1, choices=RATING, default=RATING[4][0])
+    rating = models.CharField(
+        max_length=1, choices=RATING, default=RATING[4][0])
     comment = models.CharField(max_length=200)
     username = models.CharField(max_length=200)
     user_fk = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -34,4 +36,3 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'brewery_id': self.brewery.api_id})
-
