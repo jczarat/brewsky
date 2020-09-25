@@ -8,16 +8,29 @@
             <div class="tile is-child box notification is-dark">
                 <p class="title">{{brewery_result.name}}</p>
                 <p class="title is-size-4">{{brewery_result.phone}}</p>
-                <p class="title is-size-4">Average Rating: {{ average_rating }}</p>
+                <p class="title is-size-4">Average Rating: {{ average_rating|floatformat:'1' }}</p>
             </div>
             <div class="tile is-child box notification is-dark">
                 <p class="title is-size-6">{{brewery_result.street}},</p>
-                <p class="title is-size-6">{{brewery_result.city}}, {{brewery_result.state}}, {{brewery_result.postal_code}}</p>
+                <p class="title is-size-6">{{brewery_result.city}}, {{brewery_result.state}},
+                    {{brewery_result.postal_code}}</p>
                 <p class="title is-size-6">{{ brewery_result.country }}</p>
             </div>
             <div class="tile is-child box notification is-dark">
                 <p class="title is-size-4">Style: {{brewery_result.brewery_type}}</p>
-                <a href="{{ brewery_result.website_url }}" class="title is-size-5 has-text-info">{{ brewery_result.website_url }}</a>
+                <a href="{{ brewery_result.website_url }}"
+                    class="title is-size-5 has-text-info">{{ brewery_result.website_url }}</a>
+            </div>
+            <div class="tile is-child box notification is-dark">
+                <form action="{% url 'add_favorite' brewery_result.id %}" method="post" class='mb-6'>
+                    {% csrf_token %}
+                    <div class="field">
+                        <div class="control">
+                            <label class="label has-text-white is-size-4">Save To My Breweries</label>
+                            <input type="submit" class="button is-info mt-4 is large is-fullwidth" value="Add Favorite">
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="tile is-parent">
@@ -38,13 +51,13 @@
                 <label for="" class="label">Rating</label>
                 <p class="control mb-4">
                     <span class="select"><select name="rating" id="">
-                        <option value="">Select Dropdown</option>
-                        <option value="1">1 star</option>
-                        <option value="2">2 star</option>
-                        <option value="3">3 star</option>
-                        <option value="4">4 star</option>
-                        <option value="5">5 star</option>
-                    </select></span>
+                            <option value="">Select Dropdown</option>
+                            <option value="1">1 star</option>
+                            <option value="2">2 star</option>
+                            <option value="3">3 star</option>
+                            <option value="4">4 star</option>
+                            <option value="5">5 star</option>
+                        </select></span>
                 </p>
                 <label class="label">Comment</label>
                 <textarea name="comment" class="textarea" placeholder=""></textarea>
@@ -82,16 +95,6 @@
         </div>
     </article>
     {% endfor %}
-
-    <form action="{% url 'add_favorite' brewery_result.id %}" method="post" class='mb-6'>
-        {% csrf_token %}
-        <div class="field">
-            <label class="label">Save This Brewery To My Breweries</label>
-            <div class="control">
-                <input type="submit" class="button is-info mt-3" value="Add Favorite">
-            </div>
-        </div>
-    </form>
 
 </div>
 
